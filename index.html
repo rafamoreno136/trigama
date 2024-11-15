@@ -59,7 +59,7 @@
         /* Tooltip */
         .tooltip {
             position: absolute;
-            bottom: -70px;
+            top: -100px; /* Ubicación encima del círculo */
             left: 50%;
             transform: translateX(-50%);
             background: rgba(0, 0, 0, 0.8);
@@ -79,6 +79,14 @@
             opacity: 1;
             visibility: visible;
         }
+
+        .tooltip .name {
+            font-weight: bold; /* Nombre en negrita */
+        }
+
+        .tooltip .description {
+            margin-top: 5px; /* Espaciado entre nombre y descripción */
+        }
     </style>
 </head>
 <body>
@@ -87,7 +95,8 @@
             <!-- Las líneas del trigrama se generarán dinámicamente -->
         </div>
         <div class="tooltip" id="tooltip">
-            <!-- Tooltip dinámico -->
+            <div class="name"></div> <!-- Nombre del trigrama -->
+            <div class="description"></div> <!-- Descripción del trigrama -->
         </div>
     </div>
 
@@ -143,6 +152,8 @@
         // Obtener contenedores
         const trigramContainer = document.getElementById("trigram");
         const tooltip = document.getElementById("tooltip");
+        const nameElement = tooltip.querySelector(".name");
+        const descriptionElement = tooltip.querySelector(".description");
 
         // Generar las líneas del trigrama
         const selectedTrigram = trigramas[trigramIndex];
@@ -153,7 +164,8 @@
         });
 
         // Agregar el contenido del tooltip
-        tooltip.textContent = `${selectedTrigram.name}: ${selectedTrigram.nature}`;
+        nameElement.textContent = selectedTrigram.name;
+        descriptionElement.textContent = selectedTrigram.nature;
     </script>
 </body>
 </html>
