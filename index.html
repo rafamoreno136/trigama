@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trigrama Diario</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        .circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .trigram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            height: 80px; /* Altura ajustada */
+            width: 80px; /* Más ancho */
+        }
+
+        .line {
+            width: 100%;
+            height: 12px; /* Más alto */
+            background-color: black;
+            margin-bottom: 4px; /* Espaciado reducido */
+        }
+
+        .line:last-child {
+            margin-bottom: 0; /* Eliminar el margen inferior del último */
+        }
+
+        .line.broken {
+            background: linear-gradient(to right, black 40%, transparent 40%, transparent 60%, black 60%);
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: absolute;
+            bottom: -70px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 10px 20px; /* Más espacio interno */
+            border-radius: 4px;
+            font-size: 16px; /* Tamaño de fuente más grande */
+            text-align: center;
+            width: 220px; /* Más ancho */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            pointer-events: none; /* Evitar interacción */
+        }
+
+        .circle:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body>
+    <div class="circle">
+        <div class="trigram" id="trigram">
+            <!-- Las líneas del trigrama se generarán dinámicamente -->
+        </div>
+        <div class="tooltip" id="tooltip">
+            <!-- Tooltip dinámico -->
+        </div>
+    </div>
+
+    <script>
+        // Trigramas según el I Ching
+        const trigramas = [
+            { 
+                name: "Qián (Cielo)", 
+                nature: "Creatividad, fuerza, iniciación", 
+                lines: ["solid", "solid", "solid"] 
+            },
+            { 
+                name: "Kūn (Tierra)", 
+                nature: "Receptividad, sustento, soporte", 
+                lines: ["broken", "broken", "broken"] 
+            },
+            { 
+                name: "Zhèn (Trueno)", 
+                nature: "Movimiento, impulso, dinamismo", 
+                lines: ["broken", "solid", "solid"] 
+            },
+            { 
+                name: "Xùn (Viento/Madera)", 
+                nature: "Suavidad, penetración, expansión", 
+                lines: ["solid", "solid", "broken"] 
+            },
+            { 
+                name: "Kǎn (Agua)", 
+                nature: "Fluidez, adaptabilidad, misterio", 
+                lines: ["broken", "solid", "broken"] 
+            },
+            { 
+                name: "Lí (Fuego)", 
+                nature: "Brillo, claridad, iluminación", 
+                lines: ["solid", "broken", "solid"] 
+            },
+            { 
+                name: "Gèn (Montaña)", 
+                nature: "Quietud, estabilidad, descanso", 
+                lines: ["solid", "broken", "broken"] 
+            },
+            { 
+                name: "Duì (Lago)", 
+                nature: "Alegría, serenidad, comunicación", 
+                lines: ["broken", "solid", "solid"] 
+            }
+        ];
+
+        // Obtener el índice del trigrama según el día
+        const date = new Date();
+        const trigramIndex = date.getDay() % trigramas.length; // 0 a 7 según el día de la semana
+
+        // Obtener contenedores
+        const trigramContainer = document.getElementById("trigram");
+        const tooltip = document.getElementById("tooltip");
+
+        // Generar las líneas del trigrama
+        const selectedTrigram = trigramas[trigramIndex];
+        selectedTrigram.lines.forEach(type => {
+            const line = document.createElement("div");
+            line.className = `line ${type === "broken" ? "broken" : ""}`;
+            trigramContainer.appendChild(line);
+        });
+
+        // Agregar el contenido del tooltip
+        tooltip.textContent = `${selectedTrigram.name}: ${selectedTrigram.nature}`;
+    </script>
+</body>
+</html>
