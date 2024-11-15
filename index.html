@@ -59,9 +59,9 @@
         /* Tooltip */
         .tooltip {
             position: absolute;
-            top: -30px; /* Ajustado para que el tooltip esté encima del círculo */
+            top: 50%; /* Ajuste para que el tooltip esté centrado verticalmente */
             left: 50%;
-            transform: translateX(-50%);
+            transform: translate(-50%, -100%); /* Centrado completo y ajuste para que "pise" el círculo */
             background: rgba(0, 0, 0, 0.8);
             color: #fff;
             padding: 10px 20px; /* Más espacio interno */
@@ -166,7 +166,12 @@
 
         // Agregar el contenido del tooltip
         nameElement.textContent = selectedTrigram.name;
-        descriptionElement.textContent = selectedTrigram.nature;
+
+        // Modificar la descripción para agregar un punto al final de la última palabra
+        let descriptionText = selectedTrigram.nature;
+        const words = descriptionText.split(" ");
+        words[words.length - 1] += "."; // Añadir un punto a la última palabra
+        descriptionElement.textContent = words.join(" ");
     </script>
 </body>
 </html>
